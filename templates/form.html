@@ -1,0 +1,92 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,
+        initial-scale=1.0">
+        <title>Hospital Patient Form</title>
+        <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+
+
+    </head>
+    <body>
+
+    <div class = "container mt-5">
+            <h2 class="text-center ">Function Base View Modelform CRUD</h2>
+    </div>
+
+        <script src="{% static 'js/bootstrap.js' %}"></script>
+        <script src="{% static 'js/popper.js' %}"></script>
+        <script src="{% static 'js/jquery.js' %}"></script>
+
+
+    <br>
+    <br>
+    <div class="text-center">
+            <div class="row">
+               <div class = "col-sm-4">
+                 <h3 class="text-center alert alert-info">Add Here Patient Details</h3>
+                 <form action="" method="POST">
+                 {% csrf_token %}
+                 {{ form.as_p }}
+                 <input type="submit" class="btn btn-success" value="Add" >
+                 </form>
+                 </div>
+            </div>
+
+    </div>
+    <br>
+    <br>
+
+    <div class="row">
+      <div class = "col-sm-6">
+        <h3 class="text-center alert alert-info">Paitent List</h3>
+        {% if pat %}
+            <table class="table table-hover">
+              <thead>
+                 <tr>
+                     <th scope="col">ID</th>
+                     <th scope="col">Serial</th>
+                     <th scope="col">Name</th>
+                     <th scope="col">Doctor</th>
+                     <th scope="col">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+              {% for pa in pat %}
+                <tr>
+
+                     <th scope="row">{{ pa.id }}</th>
+                     <td>{{ pa.serial }}</td>
+                     <td>{{ pa.name }}</td>
+                     <td>{{ pa.doctor }}</td>
+                     <td>
+                         <a href="{% url 'updatedata' pa.id %}" class="btn btn-success">Edit</a>
+                         <form action="{% url 'deletedata' pa.id %}" method="post" class="d-inline">
+                             {% csrf_token %}
+                             <input type="submit" class="btn btn-danger" value="Delete">
+
+                         </form>
+                     </td>
+
+
+                </tr>
+               {% endfor %}
+
+              </tbody>
+            </table>
+
+        {% else %}
+            <h2 class="alert-danger">No Data</h2>
+
+        {% endif %}
+    </form>
+      </div>
+    </div>
+
+
+
+
+    </body>
+</html>
